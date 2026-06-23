@@ -1,108 +1,236 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Project Gallery | MAC'B Painting & Pressure Washing NC",
+  title: "Gallery",
   description:
-    "View before and after photos of painting and pressure washing projects completed by MAC'B Painting in the Triangle Area of NC.",
+    "Before and after project photos from MAC'B Painting & Pressure Washing across the Triangle Area of NC — interior painting, exterior painting, pressure washing, deck restoration.",
 };
 
-const categories = [
-  { label: "All", id: "all" },
-  { label: "Exterior Painting", id: "exterior" },
-  { label: "Interior Painting", id: "interior" },
-  { label: "Pressure Washing", id: "pressure" },
-  { label: "Deck & Fence", id: "deck" },
-];
-
-// Placeholder project data
 const projects = [
-  { id: 1, category: "exterior", title: "Exterior Repaint — Raleigh", tag: "After", bgColor: "#1B4F8A", note: "Full exterior repaint, trim & shutters" },
-  { id: 2, category: "exterior", title: "Exterior Repaint — Raleigh", tag: "Before", bgColor: "#9CA3AF", note: "Faded original paint, 15 years old" },
-  { id: 3, category: "interior", title: "Interior Living Room — Durham", tag: "After", bgColor: "#2E6CB8", note: "Accent wall + ceiling paint" },
-  { id: 4, category: "interior", title: "Interior Living Room — Durham", tag: "Before", bgColor: "#D1D5DB", note: "Scuffed walls, dated color" },
-  { id: 5, category: "pressure", title: "Driveway Wash — Cary", tag: "After", bgColor: "#E9ECEF", note: "Concrete driveway cleaning" },
-  { id: 6, category: "pressure", title: "Driveway Wash — Cary", tag: "Before", bgColor: "#6B7280", note: "Heavy mold, oil stains" },
-  { id: 7, category: "deck", title: "Deck Restoration — Apex", tag: "After", bgColor: "#C8880E", note: "Clean + stain + seal" },
-  { id: 8, category: "deck", title: "Deck Restoration — Apex", tag: "Before", bgColor: "#92400E", note: "Weathered, gray, splinters" },
-  { id: 9, category: "exterior", title: "Commercial Building — Chapel Hill", tag: "After", bgColor: "#143D6B", note: "Full building exterior" },
-  { id: 10, category: "interior", title: "Kitchen & Dining — Wake Forest", tag: "After", bgColor: "#1E3A5F", note: "Cabinets + walls" },
-  { id: 11, category: "pressure", title: "House Siding Wash — Garner", tag: "After", bgColor: "#374151", note: "Vinyl siding, mold removal" },
-  { id: 12, category: "deck", title: "Fence Cleaning — Morrisville", tag: "After", bgColor: "#78350F", note: "Privacy fence, 6 panels" },
+  {
+    id: 1,
+    type: "Exterior Painting",
+    location: "Raleigh, NC",
+    size: "large",
+    colorBefore: "linear-gradient(145deg, #3D4147 0%, #212529 100%)",
+    colorAfter: "linear-gradient(145deg, #1A2942 0%, #0C1117 100%)",
+  },
+  {
+    id: 2,
+    type: "Interior Painting",
+    location: "Durham, NC",
+    size: "medium",
+    colorBefore: "linear-gradient(145deg, #4A4A4A 0%, #2C2C2C 100%)",
+    colorAfter: "linear-gradient(145deg, #C9A96E 0%, #A07840 100%)",
+  },
+  {
+    id: 3,
+    type: "Deck Restoration",
+    location: "Cary, NC",
+    size: "medium",
+    colorBefore: "linear-gradient(145deg, #5C4A3A 0%, #3D2E1E 100%)",
+    colorAfter: "linear-gradient(145deg, #8B6914 0%, #6B500F 100%)",
+  },
+  {
+    id: 4,
+    type: "Pressure Washing",
+    location: "Chapel Hill, NC",
+    size: "large",
+    colorBefore: "linear-gradient(145deg, #4A4A4A 0%, #2A2A2A 100%)",
+    colorAfter: "linear-gradient(145deg, #E8E0D0 0%, #D4CEBD 100%)",
+  },
+  {
+    id: 5,
+    type: "Exterior Painting",
+    location: "Apex, NC",
+    size: "small",
+    colorBefore: "linear-gradient(145deg, #3A3A3A 0%, #252525 100%)",
+    colorAfter: "linear-gradient(145deg, #2C3E50 0%, #1A2942 100%)",
+  },
+  {
+    id: 6,
+    type: "Interior Painting",
+    location: "Wake Forest, NC",
+    size: "small",
+    colorBefore: "linear-gradient(145deg, #4A4040 0%, #302020 100%)",
+    colorAfter: "linear-gradient(145deg, #F5F1EB 0%, #EAE4D8 100%)",
+  },
+  {
+    id: 7,
+    type: "Fence Painting",
+    location: "Morrisville, NC",
+    size: "medium",
+    colorBefore: "linear-gradient(145deg, #5C5040 0%, #3A3020 100%)",
+    colorAfter: "linear-gradient(145deg, #FFFFFF 0%, #E0E0D8 100%)",
+  },
+  {
+    id: 8,
+    type: "Exterior Painting",
+    location: "Durham, NC",
+    size: "large",
+    colorBefore: "linear-gradient(145deg, #3A3030 0%, #252020 100%)",
+    colorAfter: "linear-gradient(145deg, #C9A96E 0%, #8B6914 100%)",
+  },
 ];
 
 export default function GalleryPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-4" style={{ backgroundColor: "#1B4F8A" }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#E8A020" }}>Our Work</span>
-          <h1 className="text-4xl sm:text-6xl font-black text-white mb-6" style={{ letterSpacing: "-0.025em" }}>
-            See the results for yourself.
-          </h1>
-          <p className="text-white/65 text-lg max-w-xl mx-auto">
-            Real projects. Real results. Browse before &amp; after photos from our work across the Triangle Area of NC.
-          </p>
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <section className="py-16 px-4" style={{ backgroundColor: "#F8F9FA" }}>
-        <div className="max-w-7xl mx-auto">
-
-          {/* Filter pills — display only, no JS filter to avoid "use client" on this static page */}
-          <div className="flex flex-wrap gap-2 mb-10">
-            {categories.map((c) => (
-              <span
-                key={c.id}
-                className="px-4 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all"
+      {/* ─── HEADER ─── */}
+      <section
+        className="pt-36 pb-20 lg:pt-48 lg:pb-28 px-6 lg:px-12"
+        style={{ backgroundColor: "#0C1117" }}
+      >
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] font-medium mb-6" style={{ color: "#C9A96E" }}>
+                Our Work
+              </p>
+              <h1
+                className="font-display font-light leading-[0.9]"
                 style={{
-                  backgroundColor: c.id === "all" ? "#1B4F8A" : "#ffffff",
-                  color: c.id === "all" ? "#ffffff" : "#343A40",
-                  border: "1px solid #E9ECEF",
+                  fontSize: "clamp(52px, 8vw, 120px)",
+                  color: "#F5F1EB",
+                  letterSpacing: "-0.025em",
                 }}
               >
-                {c.label}
+                The results
+                <br />
+                <em style={{ color: "#C9A96E" }}>speak clearly.</em>
+              </h1>
+            </div>
+            <p className="max-w-xs text-sm leading-relaxed" style={{ color: "rgba(245,241,235,0.4)" }}>
+              Before and after project photos from homes and commercial properties across the Triangle Area of NC. Real work. Real results.
+            </p>
+          </div>
+
+          {/* Filter tags */}
+          <div className="flex flex-wrap gap-2 mt-12">
+            {["All Work", "Interior", "Exterior", "Pressure Washing", "Deck & Fence"].map((tag, i) => (
+              <span
+                key={tag}
+                className="text-[10px] uppercase tracking-[0.2em] px-4 py-2 border cursor-pointer transition-all"
+                style={{
+                  borderColor: i === 0 ? "#C9A96E" : "rgba(245,241,235,0.12)",
+                  color: i === 0 ? "#C9A96E" : "rgba(245,241,235,0.4)",
+                  backgroundColor: i === 0 ? "rgba(201,169,110,0.08)" : "transparent",
+                }}
+              >
+                {tag}
               </span>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
-            {projects.map((p) => (
+      {/* ─── GALLERY GRID ─── */}
+      <section className="py-12 px-6 lg:px-12" style={{ backgroundColor: "#F5F1EB" }}>
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {projects.map((project) => (
               <div
-                key={p.id}
-                className="break-inside-avoid rounded-xl overflow-hidden relative group"
-                style={{ backgroundColor: p.bgColor }}
+                key={project.id}
+                className={`group relative overflow-hidden rounded-sm ${
+                  project.size === "large" ? "sm:col-span-2 lg:col-span-2" : ""
+                }`}
+                style={{ height: project.size === "large" ? "440px" : project.size === "medium" ? "340px" : "260px" }}
               >
-                <div className="aspect-[4/3] flex items-end p-3">
-                  <div className="w-full">
-                    <span
-                      className="inline-block text-xs font-bold px-2 py-1 rounded-md mb-1"
-                      style={{
-                        backgroundColor: p.tag === "After" ? "#E8A020" : "rgba(0,0,0,0.45)",
-                        color: "#ffffff",
-                      }}
-                    >
-                      {p.tag}
-                    </span>
-                    <p className="text-xs text-white/70 leading-snug">{p.note}</p>
+                {/* Before/After split */}
+                <div className="absolute inset-0 flex">
+                  <div
+                    className="w-1/2 h-full relative"
+                    style={{ background: project.colorBefore }}
+                  >
+                    <div className="absolute bottom-4 left-4">
+                      <span
+                        className="text-[9px] uppercase tracking-[0.2em] px-2 py-1"
+                        style={{ backgroundColor: "rgba(12,17,23,0.6)", color: "rgba(245,241,235,0.5)" }}
+                      >
+                        Before
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-px" style={{ backgroundColor: "rgba(245,241,235,0.3)" }} />
+                  <div
+                    className="w-1/2 h-full relative"
+                    style={{ background: project.colorAfter }}
+                  >
+                    <div className="absolute bottom-4 right-4">
+                      <span
+                        className="text-[9px] uppercase tracking-[0.2em] px-2 py-1"
+                        style={{ backgroundColor: "rgba(201,169,110,0.8)", color: "#0C1117" }}
+                      >
+                        After
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-                  <p className="text-white text-xs font-semibold text-center px-3">{p.title}</p>
+
+                {/* Hover overlay */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6"
+                  style={{ background: "linear-gradient(to top, rgba(12,17,23,0.85) 0%, transparent 60%)" }}
+                >
+                  <div>
+                    <p className="text-sm font-medium" style={{ color: "#F5F1EB" }}>{project.type}</p>
+                    <p className="text-xs uppercase tracking-[0.18em] mt-0.5" style={{ color: "#C9A96E" }}>
+                      {project.location}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Default label */}
+                <div className="absolute top-4 left-4">
+                  <span
+                    className="text-[9px] uppercase tracking-[0.18em]"
+                    style={{ color: "rgba(245,241,235,0.4)" }}
+                  >
+                    {project.type} · {project.location}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-12 text-center p-8 rounded-2xl" style={{ backgroundColor: "#ffffff", border: "1px solid #E9ECEF" }}>
-            <p className="text-neutral-600 mb-2 font-semibold">Project photos are being added regularly.</p>
-            <p className="text-sm text-neutral-400 mb-6">Want to see more examples from your specific project type? We&apos;re happy to share additional photos during your free estimate consultation.</p>
-            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-white transition-all" style={{ backgroundColor: "#1B4F8A" }}>
-              Request a Free Estimate <ArrowRight size={15} />
-            </Link>
+          <p className="text-center text-xs uppercase tracking-[0.2em] mt-8 mb-4" style={{ color: "#8B8E99" }}>
+            Showing sample project placeholders — real project photos coming soon
+          </p>
+        </div>
+      </section>
+
+      {/* ─── PORTFOLIO NOTE ─── */}
+      <section className="py-20 px-6 lg:px-12" style={{ backgroundColor: "#EAE4D8" }}>
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-6">
+              <h2
+                className="font-display font-light leading-[1.0]"
+                style={{
+                  fontSize: "clamp(28px, 3.5vw, 48px)",
+                  color: "#0C1117",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Want to see more
+                <br />
+                <em style={{ color: "#C9A96E" }}>before &amp; after work?</em>
+              </h2>
+            </div>
+            <div className="lg:col-span-6 space-y-5">
+              <p className="text-base leading-relaxed" style={{ color: "#3D4147" }}>
+                We have extensive before and after documentation from projects across the Triangle. Ask us to share the full portfolio when you reach out — we&apos;re happy to show you work from properties similar to yours.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-3 px-7 py-4 text-sm uppercase tracking-[0.2em] font-medium transition-all hover:gap-5"
+                style={{ backgroundColor: "#0C1117", color: "#F5F1EB" }}
+              >
+                Request Full Portfolio <ArrowUpRight size={15} strokeWidth={1.5} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

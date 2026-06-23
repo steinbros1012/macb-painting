@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 type FormData = {
   name: string;
@@ -53,58 +54,150 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="text-center py-12 px-6">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5 text-2xl" style={{ backgroundColor: "#E8F4E8" }}>
-          ✓
+      <div className="py-16 px-8" style={{ backgroundColor: "#EAE4D8" }}>
+        <div
+          className="w-12 h-12 flex items-center justify-center mb-8"
+          style={{ backgroundColor: "#C9A96E" }}
+        >
+          <span className="text-xl font-bold" style={{ color: "#0C1117" }}>✓</span>
         </div>
-        <h3 className="text-2xl font-black mb-2" style={{ color: "#1B4F8A" }}>Request Received!</h3>
-        <p className="text-neutral-600 max-w-sm mx-auto">
-          Thanks, {form.name}! We&apos;ll be in touch within 24 hours to schedule your free estimate.
+        <h3
+          className="font-display font-light mb-4"
+          style={{ fontSize: "clamp(24px, 2.5vw, 36px)", color: "#0C1117", letterSpacing: "-0.015em" }}
+        >
+          Request received,
+          <br />
+          <em style={{ color: "#C9A96E" }}>{form.name}.</em>
+        </h3>
+        <p className="text-sm leading-relaxed" style={{ color: "#3D4147" }}>
+          We&apos;ll be in touch within one business day to schedule your free estimate.
         </p>
       </div>
     );
   }
 
-  const inputClass = "w-full px-4 py-3 rounded-lg border border-neutral-200 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#1B4F8A] focus:border-transparent text-sm transition-shadow bg-white";
-  const labelClass = "block text-xs font-bold text-neutral-600 uppercase tracking-wide mb-1.5";
+  const baseInput: React.CSSProperties = {
+    width: "100%",
+    backgroundColor: "transparent",
+    border: "none",
+    borderBottom: "1px solid rgba(12,17,23,0.15)",
+    borderRadius: 0,
+    padding: "12px 0",
+    fontSize: "14px",
+    color: "#0C1117",
+    outline: "none",
+    fontFamily: "inherit",
+    transition: "border-color 0.2s",
+  };
+
+  const labelStyle: React.CSSProperties = {
+    display: "block",
+    fontSize: "10px",
+    textTransform: "uppercase",
+    letterSpacing: "0.22em",
+    fontWeight: 500,
+    color: "#8B8E99",
+    marginBottom: "4px",
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <div>
-          <label htmlFor="name" className={labelClass}>Full Name *</label>
-          <input id="name" name="name" type="text" required value={form.name} onChange={handleChange} placeholder="John Smith" className={inputClass} autoComplete="name" />
+          <label htmlFor="name" style={labelStyle}>Full Name *</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Your name"
+            style={baseInput}
+            autoComplete="name"
+          />
         </div>
         <div>
-          <label htmlFor="phone" className={labelClass}>Phone Number *</label>
-          <input id="phone" name="phone" type="tel" required value={form.phone} onChange={handleChange} placeholder="(919) 555-0000" className={inputClass} autoComplete="tel" />
+          <label htmlFor="phone" style={labelStyle}>Phone *</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            value={form.phone}
+            onChange={handleChange}
+            placeholder="(919) 000-0000"
+            style={baseInput}
+            autoComplete="tel"
+          />
         </div>
       </div>
+
       <div>
-        <label htmlFor="email" className={labelClass}>Email Address *</label>
-        <input id="email" name="email" type="email" required value={form.email} onChange={handleChange} placeholder="you@email.com" className={inputClass} autoComplete="email" />
+        <label htmlFor="email" style={labelStyle}>Email *</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          value={form.email}
+          onChange={handleChange}
+          placeholder="you@email.com"
+          style={baseInput}
+          autoComplete="email"
+        />
       </div>
+
       <div>
-        <label htmlFor="service" className={labelClass}>Service Needed *</label>
-        <select id="service" name="service" required value={form.service} onChange={handleChange} className={inputClass} style={{ color: form.service ? "#212529" : "#9CA3AF" }}>
+        <label htmlFor="service" style={labelStyle}>Service Needed *</label>
+        <select
+          id="service"
+          name="service"
+          required
+          value={form.service}
+          onChange={handleChange}
+          style={{
+            ...baseInput,
+            color: form.service ? "#0C1117" : "#8B8E99",
+            appearance: "none",
+            cursor: "pointer",
+          }}
+        >
           <option value="" disabled>Select a service...</option>
           {services.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
       </div>
+
       <div>
-        <label htmlFor="message" className={labelClass}>Project Details</label>
-        <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} placeholder="Tell us about your project — property type, scope, timeline, any other details..." className={inputClass} />
+        <label htmlFor="message" style={labelStyle}>Project Details</label>
+        <textarea
+          id="message"
+          name="message"
+          rows={4}
+          value={form.message}
+          onChange={handleChange}
+          placeholder="Tell us about your project — property type, scope, timeline..."
+          style={{ ...baseInput, resize: "none" }}
+        />
       </div>
-      {error && <p className="text-red-600 text-sm text-center">{error}</p>}
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full py-4 rounded-lg font-bold text-white text-base hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed shadow-sm"
-        style={{ backgroundColor: "#1B4F8A" }}
-      >
-        {loading ? "Sending..." : "Request Free Estimate →"}
-      </button>
-      <p className="text-center text-xs text-neutral-400">We respond within 24 hours · Licensed &amp; Insured</p>
+
+      {error && (
+        <p className="text-sm" style={{ color: "#C0392B" }}>{error}</p>
+      )}
+
+      <div className="flex flex-col sm:flex-row sm:items-center gap-6 pt-2">
+        <button
+          type="submit"
+          disabled={loading}
+          className="inline-flex items-center gap-3 px-7 py-4 text-sm uppercase tracking-[0.2em] font-medium transition-all hover:gap-5 disabled:opacity-50"
+          style={{ backgroundColor: "#0C1117", color: "#F5F1EB" }}
+        >
+          {loading ? "Sending..." : <>Request Free Estimate <ArrowUpRight size={15} strokeWidth={1.5} /></>}
+        </button>
+        <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "#8B8E99" }}>
+          Response within 1 business day
+        </p>
+      </div>
     </form>
   );
 }

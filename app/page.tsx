@@ -1,369 +1,601 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { CheckCircle, Star, Phone, ArrowRight, Shield, Award, Users, Clock } from "lucide-react";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Triangle Area Painting & Pressure Washing | MAC'B Painting NC",
-  description:
-    "Family-owned painting and pressure washing company serving Raleigh, Durham, Chapel Hill, Cary & the Triangle Area of NC. Free estimates. Licensed & insured.",
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
+import { ArrowUpRight, Phone } from "lucide-react";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, delay: i * 0.12, ease: "easeOut" as const },
+  }),
 };
 
 const services = [
-  {
-    title: "Interior Painting",
-    desc: "Transform any room with a flawless finish. We handle prep, priming, and clean-up so you get results that last.",
-    icon: "🎨",
-    href: "/services#interior",
-  },
-  {
-    title: "Exterior Painting",
-    desc: "Weather-resistant coatings applied right. We protect your home's exterior while enhancing curb appeal.",
-    icon: "🏠",
-    href: "/services#exterior",
-  },
-  {
-    title: "Pressure Washing",
-    desc: "Remove years of grime, mold, and mildew from driveways, siding, decks, and more with professional equipment.",
-    icon: "💧",
-    href: "/services#pressure-washing",
-  },
-  {
-    title: "Commercial Painting",
-    desc: "Professional commercial results with minimal disruption to your business operations.",
-    icon: "🏢",
-    href: "/services#commercial",
-  },
-  {
-    title: "Deck & Fence Cleaning",
-    desc: "Restore weathered wood to like-new condition. Pressure washing and staining services available.",
-    icon: "🌿",
-    href: "/services#deck-fence",
-  },
-  {
-    title: "Residential Painting",
-    desc: "Full-service residential painting — interior and exterior — backed by a satisfaction guarantee.",
-    icon: "⭐",
-    href: "/services#residential",
-  },
+  { num: "01", title: "Interior Painting", sub: "Every room. Every surface." },
+  { num: "02", title: "Exterior Painting", sub: "Weather-tough. Curb-beautiful." },
+  { num: "03", title: "Pressure Washing", sub: "Deep clean. Fast results." },
+  { num: "04", title: "Residential", sub: "Your home, respected." },
+  { num: "05", title: "Commercial", sub: "On schedule. On budget." },
+  { num: "06", title: "Deck & Fence", sub: "Restored, not replaced." },
 ];
 
-const whyUs = [
-  { icon: Shield, title: "Licensed & Insured", desc: "Full coverage on every job. You're protected." },
-  { icon: Award, title: "Quality Craftsmanship", desc: "We don't cut corners. Proper prep is everything." },
-  { icon: Users, title: "Family-Owned", desc: "You deal directly with the owner, not a middleman." },
-  { icon: Clock, title: "On Time, Every Time", desc: "We respect your schedule and communicate clearly." },
-];
-
-const stats = [
-  { value: "20+", label: "Years Experience" },
-  { value: "500+", label: "Projects Completed" },
-  { value: "100%", label: "Satisfaction Commitment" },
-  { value: "Free", label: "Estimates Always" },
+const marqueeItems = [
+  "Interior Painting",
+  "Exterior Painting",
+  "Pressure Washing",
+  "Deck Cleaning",
+  "Residential",
+  "Commercial",
+  "Triangle Area NC",
+  "Licensed & Insured",
 ];
 
 export default function HomePage() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0" style={{ backgroundColor: "#0F2A4A" }} />
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: "url('/images/hero-bg.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        {/* Gradient overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(135deg, rgba(27,79,138,0.95) 0%, rgba(15,42,74,0.92) 50%, rgba(20,61,107,0.88) 100%)",
-          }}
-        />
+      {/* ─────────────────────────── HERO ─────────────────────────── */}
+      <section ref={heroRef} className="relative h-screen min-h-[700px] overflow-hidden">
+        {/* Dark background */}
+        <div className="absolute inset-0" style={{ backgroundColor: "#0C1117" }} />
 
-        {/* Subtle pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+        {/* Subtle grain texture via SVG filter */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" aria-hidden>
+          <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noise)" />
+        </svg>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
-          <div className="max-w-3xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-bold uppercase tracking-widest" style={{ backgroundColor: "rgba(232,160,32,0.15)", border: "1px solid rgba(232,160,32,0.4)", color: "#E8A020" }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E8A020] animate-pulse" />
-              Triangle Area NC · Family-Owned Since 2000
-            </div>
+        {/* Ink wash photo block — right side */}
+        <motion.div
+          className="absolute right-0 top-0 bottom-0 w-[52%] hidden lg:block"
+          style={{ y: heroY }}
+        >
+          {/* Color placeholder — replace with real photo */}
+          <div
+            className="w-full h-full"
+            style={{
+              background: "linear-gradient(160deg, #1A2942 0%, #0C1117 100%)",
+            }}
+          />
+          {/* Gold overlay gradient merging into dark */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, #0C1117 0%, rgba(12,17,23,0.4) 30%, transparent 60%)",
+            }}
+          />
+          {/* Subtle warm accent */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-1"
+            style={{ background: "linear-gradient(to right, transparent, #C9A96E 50%, transparent)" }}
+          />
+        </motion.div>
 
-            <h1
-              className="font-black text-white leading-[1.0] mb-6"
-              style={{ fontSize: "clamp(40px, 6vw, 76px)", letterSpacing: "-0.025em" }}
+        {/* Hero content */}
+        <motion.div
+          className="relative z-10 h-full flex flex-col justify-end pb-16 lg:pb-24 max-w-[1440px] mx-auto px-6 lg:px-12"
+          style={{ opacity: heroOpacity }}
+        >
+          {/* Top label */}
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+            className="text-xs uppercase tracking-[0.3em] mb-10 lg:mb-16 font-medium"
+            style={{ color: "#C9A96E" }}
+          >
+            Triangle Area, North Carolina · Est. Early 2000s
+          </motion.p>
+
+          {/* Main headline — editorial scale */}
+          <div className="max-w-3xl lg:max-w-4xl">
+            <motion.h1
+              className="font-display font-light leading-[0.9] mb-8"
+              style={{
+                fontSize: "clamp(64px, 10vw, 148px)",
+                color: "#F5F1EB",
+                letterSpacing: "-0.02em",
+              }}
             >
-              Painting &amp; Pressure Washing
-              <br />
-              <span style={{ color: "#E8A020" }}>Done Right.</span>
-            </h1>
+              <motion.span
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                custom={0.5}
+                className="block"
+              >
+                Painted
+              </motion.span>
+              <motion.span
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                custom={1}
+                className="block italic"
+                style={{ color: "#C9A96E" }}
+              >
+                with care.
+              </motion.span>
+            </motion.h1>
 
-            <p className="text-lg sm:text-xl text-white/65 max-w-xl leading-relaxed mb-10">
-              MAC&apos;B Painting &amp; Pressure Washing has served the Triangle Area since the early 2000s. Family-owned. Honest. Reliable. Free estimates on every project.
-            </p>
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={1.5}
+              className="text-base lg:text-lg max-w-md leading-relaxed mb-10"
+              style={{ color: "rgba(245,241,235,0.55)" }}
+            >
+              A family that has been crafting interiors, transforming exteriors, and restoring surfaces across the Triangle since the early 2000s.
+            </motion.p>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-14">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={2}
+              className="flex flex-wrap items-center gap-4"
+            >
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-bold text-white text-base transition-all shadow-lg"
-                style={{ backgroundColor: "#E8A020" }}
+                className="inline-flex items-center gap-3 px-7 py-4 text-sm uppercase tracking-[0.2em] font-medium transition-all duration-300 hover:gap-5"
+                style={{ backgroundColor: "#C9A96E", color: "#0C1117" }}
               >
-                Get a Free Estimate <ArrowRight size={18} />
+                Free Estimate <ArrowUpRight size={16} strokeWidth={1.5} />
               </Link>
               <a
                 href="tel:+19198675309"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-bold text-white text-base border-2 transition-all"
-                style={{ borderColor: "rgba(255,255,255,0.3)", backgroundColor: "rgba(255,255,255,0.06)" }}
+                className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] font-medium transition-opacity hover:opacity-60"
+                style={{ color: "rgba(245,241,235,0.6)" }}
               >
-                <Phone size={16} /> (919) 867-5309
+                <Phone size={14} strokeWidth={1.5} />
+                (919) 867-5309
               </a>
-            </div>
+            </motion.div>
+          </div>
 
-            {/* Trust bullets */}
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {["Licensed & Insured", "Free Estimates", "20+ Years Experience", "Family-Owned"].map((t) => (
-                <div key={t} className="flex items-center gap-2 text-sm text-white/70">
-                  <CheckCircle size={14} className="text-[#E8A020] flex-shrink-0" />
-                  {t}
+          {/* Bottom strip */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={2.5}
+            className="absolute bottom-0 left-0 right-0 border-t flex"
+            style={{ borderColor: "rgba(245,241,235,0.08)" }}
+          >
+            {[
+              { val: "20+", label: "Years" },
+              { val: "500+", label: "Projects" },
+              { val: "6", label: "Services" },
+              { val: "Free", label: "Estimates" },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="flex-1 py-5 text-center border-r last:border-r-0"
+                style={{ borderColor: "rgba(245,241,235,0.08)" }}
+              >
+                <div
+                  className="font-display text-2xl font-semibold"
+                  style={{ color: "#C9A96E" }}
+                >
+                  {s.val}
                 </div>
-              ))}
+                <div
+                  className="text-[10px] uppercase tracking-[0.2em] mt-0.5"
+                  style={{ color: "rgba(245,241,235,0.35)" }}
+                >
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* ─────────────────── MARQUEE ─────────────────── */}
+      <div
+        className="py-3 overflow-hidden border-y"
+        style={{ backgroundColor: "#C9A96E", borderColor: "#B8955A" }}
+      >
+        <div className="flex whitespace-nowrap marquee-track">
+          {[...marqueeItems, ...marqueeItems].map((item, i) => (
+            <span
+              key={i}
+              className="text-xs uppercase tracking-[0.25em] font-medium px-8"
+              style={{ color: "#0C1117" }}
+            >
+              {item} <span className="opacity-40 mx-4">·</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ─────────────────── CRAFT STORY ─────────────────── */}
+      <section className="py-28 lg:py-40 px-6 lg:px-12 max-w-[1440px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 items-end">
+          {/* Large number */}
+          <div className="lg:col-span-1 hidden lg:flex items-end pb-2">
+            <span
+              className="font-display text-6xl font-light"
+              style={{ color: "rgba(12,17,23,0.08)", lineHeight: 1 }}
+            >
+              01
+            </span>
+          </div>
+
+          {/* Left — big editorial pull quote */}
+          <div className="lg:col-span-5 lg:pr-16">
+            <p
+              className="text-xs uppercase tracking-[0.28em] font-medium mb-8"
+              style={{ color: "#C9A96E" }}
+            >
+              Our Story
+            </p>
+            <h2
+              className="font-display font-light leading-[1.0] mb-0"
+              style={{
+                fontSize: "clamp(42px, 5vw, 72px)",
+                color: "#0C1117",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              A father&apos;s craft,
+              <br />
+              <em>carried forward.</em>
+            </h2>
+          </div>
+
+          {/* Right — editorial prose */}
+          <div className="lg:col-span-6 lg:col-start-7">
+            <div className="space-y-5 text-base leading-relaxed" style={{ color: "#3D4147" }}>
+              <p>
+                It started with one person who took pride in what he put his hands on. In the early 2000s, that meant painting houses across the Triangle — carefully, honestly, without shortcuts.
+              </p>
+              <p>
+                That reputation grew. By 2012, it expanded into full home remodeling. For a decade, the team built additions, kitchens, and bathrooms. Good years. Thousands of hours of skilled labor.
+              </p>
+              <p>
+                Then came a decision: return to the craft that started it all. Not because remodeling wasn&apos;t valuable — but because painting and pressure washing done with genuine skill is rare. And we do it well.
+              </p>
+            </div>
+            <div className="mt-10 flex items-center gap-6">
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-medium border-b pb-0.5 transition-all hover:gap-4"
+                style={{ borderColor: "#C9A96E", color: "#0C1117" }}
+              >
+                Full Story <ArrowUpRight size={14} strokeWidth={1.5} />
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Stats strip */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-white/10" style={{ backgroundColor: "rgba(15,42,74,0.85)", backdropFilter: "blur(12px)" }}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10">
-              {stats.map((s) => (
-                <div key={s.label} className="py-5 text-center">
-                  <div className="text-2xl sm:text-3xl font-black text-[#E8A020]" style={{ letterSpacing: "-0.02em" }}>{s.value}</div>
-                  <div className="text-[10px] text-white/40 uppercase tracking-widest font-semibold mt-0.5">{s.label}</div>
-                </div>
-              ))}
+        {/* Large visual break */}
+        <div className="mt-20 lg:mt-28 grid grid-cols-1 lg:grid-cols-3 gap-3 h-[480px] lg:h-[600px]">
+          {/* Main large photo */}
+          <div
+            className="lg:col-span-2 rounded-sm overflow-hidden"
+            style={{ background: "linear-gradient(135deg, #1A2942 0%, #0C1117 100%)" }}
+          >
+            <div className="w-full h-full flex items-end p-6 lg:p-10">
+              <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(245,241,235,0.35)" }}>
+                Exterior repaint — Chapel Hill, NC
+              </p>
+            </div>
+          </div>
+          {/* Stack of two */}
+          <div className="grid grid-rows-2 gap-3">
+            <div
+              className="rounded-sm overflow-hidden"
+              style={{ background: "linear-gradient(160deg, #2C3E50 0%, #1A2942 100%)" }}
+            >
+              <div className="w-full h-full flex items-end p-4">
+                <p className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "rgba(245,241,235,0.3)" }}>
+                  Interior — Durham
+                </p>
+              </div>
+            </div>
+            <div
+              className="rounded-sm overflow-hidden"
+              style={{ background: "linear-gradient(160deg, #C9A96E 0%, #A07840 100%)" }}
+            >
+              <div className="w-full h-full flex items-end p-4">
+                <p className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "rgba(12,17,23,0.5)" }}>
+                  Deck restore — Cary
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="py-24 sm:py-32 px-4" style={{ backgroundColor: "#F8F9FA" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: "#E8A020" }}>
-              What We Do
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ color: "#1B4F8A", letterSpacing: "-0.025em" }}>
-              Painting &amp; Pressure Washing Services
-            </h2>
-            <p className="text-neutral-500 text-lg max-w-xl mx-auto">
-              From a single room to an entire commercial property, we deliver quality results on every project.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {services.map((s) => (
-              <Link
-                key={s.title}
-                href={s.href}
-                className="group p-7 bg-white rounded-2xl border border-neutral-100 hover:border-[#1B4F8A]/20 hover:shadow-[0_8px_40px_rgba(27,79,138,0.10)] transition-all duration-300"
+      {/* ─────────────────── SERVICES ─────────────────── */}
+      <section
+        className="py-28 lg:py-40"
+        style={{ backgroundColor: "#0C1117" }}
+      >
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 lg:mb-24 gap-6">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] font-medium mb-5" style={{ color: "#C9A96E" }}>
+                Services
+              </p>
+              <h2
+                className="font-display font-light"
+                style={{
+                  fontSize: "clamp(36px, 4.5vw, 64px)",
+                  color: "#F5F1EB",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.0,
+                }}
               >
-                <div className="text-3xl mb-4">{s.icon}</div>
-                <h3 className="text-lg font-bold mb-2 group-hover:text-[#1B4F8A] transition-colors" style={{ color: "#212529" }}>{s.title}</h3>
-                <p className="text-sm text-neutral-500 leading-relaxed mb-4">{s.desc}</p>
-                <span className="text-xs font-bold text-[#1B4F8A] group-hover:gap-2 inline-flex items-center gap-1 transition-all">
-                  Learn More <ArrowRight size={12} />
-                </span>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
+                What we do,
+                <br />
+                <em>done right.</em>
+              </h2>
+            </div>
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg font-bold text-white transition-all"
-              style={{ backgroundColor: "#1B4F8A" }}
+              className="self-start lg:self-auto inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-medium border-b pb-0.5 transition-all hover:gap-4"
+              style={{ borderColor: "rgba(201,169,110,0.4)", color: "#C9A96E" }}
             >
-              View All Services <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* WHY CHOOSE US */}
-      <section className="py-24 sm:py-32 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-            <div>
-              <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: "#E8A020" }}>
-                Why MAC&apos;B
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black mb-6" style={{ color: "#1B4F8A", letterSpacing: "-0.025em" }}>
-                We do the job right — or we make it right.
-              </h2>
-              <p className="text-neutral-600 text-lg leading-relaxed mb-8">
-                Our family has been in this industry since the early 2000s. We&apos;ve learned that the difference between a good job and a great job comes down to preparation, honest communication, and actually caring about the outcome.
-              </p>
-              <ul className="space-y-3 mb-10">
-                {[
-                  "Thorough surface prep before any paint or water touches your property",
-                  "Transparent pricing — no surprise costs after the job starts",
-                  "We communicate throughout the project so you always know the status",
-                  "Clean-up is part of the job, not an afterthought",
-                  "100% satisfaction commitment on every project",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-neutral-600 text-sm">
-                    <CheckCircle size={16} className="text-[#E8A020] flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/about" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-white transition-all" style={{ backgroundColor: "#1B4F8A" }}>
-                  Our Story <ArrowRight size={16} />
-                </Link>
-                <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold border-2 transition-all" style={{ borderColor: "#1B4F8A", color: "#1B4F8A" }}>
-                  Get a Free Estimate
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {whyUs.map((w) => (
-                <div key={w.title} className="p-6 rounded-2xl" style={{ backgroundColor: "#F8F9FA", border: "1px solid #E9ECEF" }}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "rgba(27,79,138,0.08)" }}>
-                    <w.icon size={20} style={{ color: "#1B4F8A" }} />
-                  </div>
-                  <h3 className="font-bold text-sm mb-1.5" style={{ color: "#212529" }}>{w.title}</h3>
-                  <p className="text-xs text-neutral-500 leading-relaxed">{w.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT PREVIEW */}
-      <section className="py-24 sm:py-28 px-4" style={{ backgroundColor: "#1B4F8A" }}>
-        <div className="max-w-5xl mx-auto text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#E8A020" }}>
-            About Us
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-black text-white mb-6" style={{ letterSpacing: "-0.025em" }}>
-            A family business built on trust.
-          </h2>
-          <p className="text-white/65 text-lg leading-relaxed max-w-2xl mx-auto mb-8">
-            MAC&apos;B Painting started with one father and a paintbrush in the early 2000s. Over two decades, we expanded, specialized, and built a reputation in the Triangle Area that we&apos;re genuinely proud of. Today, we focus exclusively on painting and pressure washing — and we do it well.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/about" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg font-bold text-white transition-all" style={{ backgroundColor: "#E8A020" }}>
-              Read Our Story <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* GALLERY PREVIEW */}
-      <section className="py-24 sm:py-32 px-4" style={{ backgroundColor: "#F8F9FA" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
-            <div>
-              <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: "#E8A020" }}>
-                Our Work
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black" style={{ color: "#1B4F8A", letterSpacing: "-0.025em" }}>
-                See the results.
-              </h2>
-            </div>
-            <Link href="/gallery" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-bold border-2 transition-all shrink-0" style={{ borderColor: "#1B4F8A", color: "#1B4F8A" }}>
-              Full Gallery <ArrowRight size={14} />
+              All Services <ArrowUpRight size={13} strokeWidth={1.5} />
             </Link>
           </div>
 
-          {/* Placeholder gallery grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {[
-              { label: "Exterior — Before", bg: "#DEE2E6" },
-              { label: "Exterior — After", bg: "#1B4F8A" },
-              { label: "Interior — Before", bg: "#E9ECEF" },
-              { label: "Interior — After", bg: "#2E6CB8" },
-              { label: "Pressure Wash — Before", bg: "#DEE2E6" },
-              { label: "Pressure Wash — After", bg: "#1B4F8A" },
-              { label: "Deck Clean — Before", bg: "#E9ECEF" },
-              { label: "Deck Clean — After", bg: "#143D6B" },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="aspect-square rounded-xl flex items-end p-3 relative overflow-hidden"
-                style={{ backgroundColor: item.bg }}
+          {/* Service list — editorial numbered style */}
+          <div className="divide-y" style={{ borderColor: "rgba(245,241,235,0.06)" }}>
+            {services.map((s, i) => (
+              <motion.div
+                key={s.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className="text-xs font-semibold px-2 py-1 rounded-md bg-black/30 text-white/90 backdrop-blur-sm">
-                  {item.label}
-                </span>
-              </div>
+                <Link
+                  href={`/services#${s.title.toLowerCase().replace(/ /g, "-")}`}
+                  className="group flex items-center justify-between py-5 lg:py-7 transition-all"
+                >
+                  <div className="flex items-center gap-6 lg:gap-12">
+                    <span
+                      className="font-display text-sm lg:text-base"
+                      style={{ color: "rgba(201,169,110,0.5)" }}
+                    >
+                      {s.num}
+                    </span>
+                    <span
+                      className="font-display text-2xl lg:text-3xl font-light italic group-hover:text-[#C9A96E] transition-colors"
+                      style={{ color: "#F5F1EB", letterSpacing: "-0.01em" }}
+                    >
+                      {s.title}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-6 lg:gap-10">
+                    <span
+                      className="hidden lg:block text-xs uppercase tracking-[0.18em]"
+                      style={{ color: "rgba(245,241,235,0.3)" }}
+                    >
+                      {s.sub}
+                    </span>
+                    <ArrowUpRight
+                      size={16}
+                      strokeWidth={1.5}
+                      className="opacity-0 group-hover:opacity-100 transition-all -translate-x-1 group-hover:translate-x-0"
+                      style={{ color: "#C9A96E" }}
+                    />
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
-          <p className="text-center text-sm text-neutral-400 mt-6">Project photos coming soon — contact us to see examples of our work.</p>
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-4" style={{ color: "#E8A020" }}>Reviews</span>
-          <h2 className="text-3xl sm:text-4xl font-black mb-10" style={{ color: "#1B4F8A", letterSpacing: "-0.025em" }}>
-            What our customers say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              { name: "Sarah M.", location: "Raleigh, NC", review: "MAC'B painted our entire exterior and it looks incredible. They were professional, on time, and the clean-up was spotless. Will definitely use them again." },
-              { name: "James T.", location: "Durham, NC", review: "Used them for pressure washing our driveway and deck. Night and day difference. Honest pricing, no surprises. Exactly what I look for in a contractor." },
-              { name: "Linda R.", location: "Cary, NC", review: "Interior rooms look completely transformed. They took their time with the prep work and it shows. The finish is smooth and the color is perfect." },
-            ].map((r) => (
-              <div key={r.name} className="p-6 rounded-2xl text-left" style={{ backgroundColor: "#F8F9FA", border: "1px solid #E9ECEF" }}>
-                <div className="flex items-center gap-0.5 mb-3">
-                  {Array(5).fill(0).map((_, i) => <Star key={i} size={14} className="fill-[#E8A020] text-[#E8A020]" />)}
-                </div>
-                <p className="text-sm text-neutral-600 leading-relaxed mb-4">&ldquo;{r.review}&rdquo;</p>
+      {/* ─────────────────── SINGLE BIG TESTIMONIAL ─────────────────── */}
+      <section className="py-28 lg:py-40 px-6 lg:px-12 max-w-[1440px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-1">
+            <div
+              className="hidden lg:block w-px"
+              style={{ height: "120px", background: "linear-gradient(to bottom, transparent, #C9A96E, transparent)" }}
+            />
+          </div>
+          <div className="lg:col-span-10">
+            <blockquote>
+              <p
+                className="font-display font-light leading-[1.1]"
+                style={{
+                  fontSize: "clamp(28px, 3.5vw, 52px)",
+                  color: "#0C1117",
+                  letterSpacing: "-0.015em",
+                }}
+              >
+                &ldquo;MAC&apos;B painted our entire exterior and transformed our home. Professional, on time, and the clean-up was spotless. Not a single detail missed. This is what craftsmanship actually looks like.&rdquo;
+              </p>
+              <footer className="mt-8 flex items-center gap-4">
+                <div
+                  className="w-8 h-px"
+                  style={{ backgroundColor: "#C9A96E" }}
+                />
                 <div>
-                  <p className="text-sm font-bold text-neutral-800">{r.name}</p>
-                  <p className="text-xs text-neutral-400">{r.location}</p>
+                  <p className="text-sm font-medium" style={{ color: "#0C1117" }}>Sarah M.</p>
+                  <p className="text-xs uppercase tracking-[0.18em] mt-0.5" style={{ color: "#8B8E99" }}>
+                    Raleigh, NC
+                  </p>
                 </div>
-              </div>
-            ))}
+              </footer>
+            </blockquote>
           </div>
+        </div>
+
+        {/* Additional testimonials — smaller */}
+        <div className="mt-16 lg:mt-24 grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: "#EAE4D8" }}>
+          {[
+            { name: "James T.", loc: "Durham, NC", quote: "Pressure washing the driveway and deck — night and day difference. Honest pricing, zero surprises. This is the team you call." },
+            { name: "Linda R.", loc: "Cary, NC", quote: "Interior rooms are completely transformed. The prep work they did before touching the walls was more thorough than I've ever seen." },
+          ].map((r) => (
+            <div
+              key={r.name}
+              className="p-8 lg:p-10"
+              style={{ backgroundColor: "#F5F1EB" }}
+            >
+              <p
+                className="font-display text-xl lg:text-2xl font-light italic leading-snug mb-6"
+                style={{ color: "#0C1117" }}
+              >
+                &ldquo;{r.quote}&rdquo;
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-5 h-px" style={{ backgroundColor: "#C9A96E" }} />
+                <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "#8B8E99" }}>
+                  {r.name} · {r.loc}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* CTA SECTION */}
-      <section className="py-24 sm:py-28 px-4" style={{ backgroundColor: "#E8A020" }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-black text-white mb-5" style={{ letterSpacing: "-0.025em" }}>
-            Ready to get started?
-          </h2>
-          <p className="text-white/80 text-lg mb-8 leading-relaxed">
-            Get a free estimate on your painting or pressure washing project. We serve Raleigh, Durham, Chapel Hill, Cary, and all of the Triangle Area.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="px-8 py-4 rounded-lg font-bold text-[#E8A020] bg-white transition-all shadow-md hover:shadow-lg text-base">
-              Request Free Estimate
+      {/* ─────────────────── WORK GALLERY TEASER ─────────────────── */}
+      <section
+        className="py-28 lg:py-40 px-6 lg:px-12"
+        style={{ backgroundColor: "#EAE4D8" }}
+      >
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] font-medium mb-5" style={{ color: "#C9A96E" }}>
+                Our Work
+              </p>
+              <h2
+                className="font-display font-light leading-[1.0]"
+                style={{
+                  fontSize: "clamp(36px, 4.5vw, 64px)",
+                  color: "#0C1117",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                The results
+                <br />
+                <em>speak clearly.</em>
+              </h2>
+            </div>
+            <Link
+              href="/gallery"
+              className="self-start sm:self-auto inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-medium border-b pb-0.5 transition-all hover:gap-4"
+              style={{ borderColor: "#0C1117", color: "#0C1117" }}
+            >
+              Full Gallery <ArrowUpRight size={13} strokeWidth={1.5} />
             </Link>
-            <a href="tel:+19198675309" className="px-8 py-4 rounded-lg font-bold text-white border-2 border-white/40 text-base hover:bg-white/10 transition-all">
-              <Phone size={16} className="inline mr-2" />(919) 867-5309
-            </a>
+          </div>
+
+          {/* Asymmetric gallery */}
+          <div className="grid grid-cols-6 grid-rows-2 gap-2.5 h-[420px] lg:h-[600px]">
+            <div className="col-span-3 row-span-2 rounded-sm overflow-hidden" style={{ background: "linear-gradient(145deg, #1A2942, #0C1117)" }}>
+              <div className="h-full flex items-end p-5 lg:p-7">
+                <div>
+                  <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: "rgba(245,241,235,0.3)" }}>After</span>
+                  <p className="text-xs mt-0.5" style={{ color: "rgba(245,241,235,0.5)" }}>Exterior — Raleigh</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-2 rounded-sm overflow-hidden" style={{ background: "linear-gradient(145deg, #C9A96E, #A07840)" }}>
+              <div className="h-full flex items-end p-4">
+                <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "rgba(12,17,23,0.4)" }}>After · Interior</span>
+              </div>
+            </div>
+            <div className="col-span-1 rounded-sm overflow-hidden" style={{ background: "linear-gradient(145deg, #2C3E50, #1A2942)" }}>
+              <div className="h-full flex items-end p-3">
+                <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "rgba(245,241,235,0.3)" }}>Before</span>
+              </div>
+            </div>
+            <div className="col-span-2 rounded-sm overflow-hidden" style={{ background: "linear-gradient(145deg, #3D4147, #212529)" }}>
+              <div className="h-full flex items-end p-4">
+                <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "rgba(245,241,235,0.3)" }}>Deck · After</span>
+              </div>
+            </div>
+            <div className="col-span-1 rounded-sm overflow-hidden" style={{ background: "linear-gradient(145deg, #C9A96E99, #A0784066)" }}>
+              <div className="h-full flex items-end p-3">
+                <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "rgba(12,17,23,0.4)" }}>After</span>
+              </div>
+            </div>
+          </div>
+          <p className="mt-5 text-xs text-center uppercase tracking-[0.2em]" style={{ color: "#8B8E99" }}>
+            Project photos — contact us to see full before &amp; after portfolios
+          </p>
+        </div>
+      </section>
+
+      {/* ─────────────────── FULL-BLEED CTA ─────────────────── */}
+      <section
+        className="relative py-32 lg:py-48 px-6 lg:px-12 overflow-hidden"
+        style={{ backgroundColor: "#0C1117" }}
+      >
+        {/* Gold accent */}
+        <div
+          className="absolute left-0 right-0 top-0 h-px"
+          style={{ background: "linear-gradient(to right, transparent 10%, #C9A96E 50%, transparent 90%)" }}
+        />
+
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] font-medium mb-6" style={{ color: "#C9A96E" }}>
+              Start Here
+            </p>
+            <h2
+              className="font-display font-light leading-[0.95]"
+              style={{
+                fontSize: "clamp(40px, 5.5vw, 80px)",
+                color: "#F5F1EB",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Ready to see
+              <br />
+              what&apos;s possible
+              <br />
+              <em style={{ color: "#C9A96E" }}>on your property?</em>
+            </h2>
+          </div>
+          <div className="flex flex-col gap-5 lg:pl-20">
+            <p className="text-base leading-relaxed" style={{ color: "rgba(245,241,235,0.5)" }}>
+              Free estimates. Honest pricing. A team that communicates, shows up, and finishes the job with the kind of care your property deserves.
+            </p>
+            <p className="text-base leading-relaxed" style={{ color: "rgba(245,241,235,0.5)" }}>
+              Serving Raleigh, Durham, Chapel Hill, Cary, Apex, and all of the Triangle Area.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-3 px-7 py-4 text-sm uppercase tracking-[0.2em] font-medium transition-all hover:gap-5"
+                style={{ backgroundColor: "#C9A96E", color: "#0C1117" }}
+              >
+                Get a Free Estimate <ArrowUpRight size={15} strokeWidth={1.5} />
+              </Link>
+              <a
+                href="tel:+19198675309"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm uppercase tracking-[0.18em] font-medium border transition-all hover:bg-white/5"
+                style={{ borderColor: "rgba(245,241,235,0.15)", color: "rgba(245,241,235,0.7)" }}
+              >
+                <Phone size={14} strokeWidth={1.5} /> (919) 867-5309
+              </a>
+            </div>
+            <p className="text-xs uppercase tracking-[0.2em]" style={{ color: "rgba(245,241,235,0.2)" }}>
+              Licensed &amp; Insured · Family-Owned · Triangle NC
+            </p>
           </div>
         </div>
       </section>

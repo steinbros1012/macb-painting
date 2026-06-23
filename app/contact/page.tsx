@@ -3,103 +3,183 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact & Free Estimate | MAC'B Painting Triangle Area NC",
+  title: "Contact",
   description:
-    "Get a free estimate from MAC'B Painting & Pressure Washing. Serving Raleigh, Durham, Chapel Hill, Cary & the Triangle Area of NC. Call (919) 867-5309.",
+    "Get a free estimate from MAC'B Painting & Pressure Washing. Serving Raleigh, Durham, Chapel Hill, Cary, and the Triangle Area of NC. Call or fill out the form.",
 };
+
+const areas = [
+  "Raleigh", "Durham", "Chapel Hill",
+  "Cary", "Apex", "Wake Forest",
+  "Morrisville", "Garner", "Clayton",
+  "Holly Springs", "Fuquay-Varina", "Pittsboro",
+];
 
 export default function ContactPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-16 px-4" style={{ backgroundColor: "#1B4F8A" }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] mb-5" style={{ color: "#E8A020" }}>Free Estimate</span>
-          <h1 className="text-4xl sm:text-5xl font-black text-white mb-4" style={{ letterSpacing: "-0.025em" }}>
-            Let&apos;s talk about your project.
-          </h1>
-          <p className="text-white/65 text-lg">
-            Fill out the form below or give us a call. We respond within 24 hours and estimates are always free.
-          </p>
-        </div>
-      </section>
-
-      {/* Main */}
-      <section className="py-16 px-4" style={{ backgroundColor: "#F8F9FA" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-
-            {/* Form */}
-            <div className="lg:col-span-2 bg-white rounded-2xl p-8 shadow-sm border border-neutral-100">
-              <h2 className="text-2xl font-black mb-2" style={{ color: "#1B4F8A" }}>Request a Free Estimate</h2>
-              <p className="text-neutral-500 text-sm mb-7">Tell us about your project and we&apos;ll be in touch within 24 hours.</p>
-              <ContactForm />
+      {/* ─── HEADER ─── */}
+      <section
+        className="pt-36 pb-20 lg:pt-48 lg:pb-28 px-6 lg:px-12"
+        style={{ backgroundColor: "#0C1117" }}
+      >
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] font-medium mb-6" style={{ color: "#C9A96E" }}>
+                Contact
+              </p>
+              <h1
+                className="font-display font-light leading-[0.9]"
+                style={{
+                  fontSize: "clamp(52px, 7vw, 100px)",
+                  color: "#F5F1EB",
+                  letterSpacing: "-0.025em",
+                }}
+              >
+                Let&apos;s talk
+                <br />
+                <em style={{ color: "#C9A96E" }}>about your</em>
+                <br />
+                project.
+              </h1>
             </div>
+            <div>
+              <p className="text-base leading-relaxed mb-10" style={{ color: "rgba(245,241,235,0.5)" }}>
+                Free estimates. No pressure. Just an honest conversation about what your property needs and what it would cost to do it right.
+              </p>
 
-            {/* Info sidebar */}
-            <div className="space-y-5">
-              {/* Phone */}
-              <div className="bg-white rounded-2xl p-6 border border-neutral-100 shadow-sm">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "rgba(27,79,138,0.08)" }}>
-                  <Phone size={18} style={{ color: "#1B4F8A" }} />
-                </div>
-                <h3 className="font-bold mb-1" style={{ color: "#212529" }}>Call Us</h3>
-                <a href="tel:+19198675309" className="text-lg font-black transition-colors hover:opacity-80" style={{ color: "#1B4F8A" }}>
-                  (919) 867-5309
+              <div className="space-y-5">
+                <a
+                  href="tel:+19198675309"
+                  className="flex items-center gap-4 transition-opacity hover:opacity-70"
+                >
+                  <div className="w-10 h-10 flex items-center justify-center border flex-shrink-0" style={{ borderColor: "rgba(201,169,110,0.3)" }}>
+                    <Phone size={15} strokeWidth={1.5} style={{ color: "#C9A96E" }} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: "rgba(245,241,235,0.3)" }}>Phone</p>
+                    <p className="text-base font-medium" style={{ color: "#F5F1EB" }}>(919) 867-5309</p>
+                  </div>
                 </a>
-                <p className="text-xs text-neutral-400 mt-1">Mon–Sat, 7am–7pm</p>
-              </div>
-
-              {/* Email */}
-              <div className="bg-white rounded-2xl p-6 border border-neutral-100 shadow-sm">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "rgba(27,79,138,0.08)" }}>
-                  <Mail size={18} style={{ color: "#1B4F8A" }} />
-                </div>
-                <h3 className="font-bold mb-1" style={{ color: "#212529" }}>Email Us</h3>
-                <a href="mailto:info@macbpainting.com" className="text-sm font-semibold transition-colors hover:opacity-80 break-all" style={{ color: "#1B4F8A" }}>
-                  info@macbpainting.com
+                <a
+                  href="mailto:info@macbpainting.com"
+                  className="flex items-center gap-4 transition-opacity hover:opacity-70"
+                >
+                  <div className="w-10 h-10 flex items-center justify-center border flex-shrink-0" style={{ borderColor: "rgba(201,169,110,0.3)" }}>
+                    <Mail size={15} strokeWidth={1.5} style={{ color: "#C9A96E" }} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: "rgba(245,241,235,0.3)" }}>Email</p>
+                    <p className="text-base font-medium" style={{ color: "#F5F1EB" }}>info@macbpainting.com</p>
+                  </div>
                 </a>
-              </div>
-
-              {/* Hours */}
-              <div className="bg-white rounded-2xl p-6 border border-neutral-100 shadow-sm">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "rgba(27,79,138,0.08)" }}>
-                  <Clock size={18} style={{ color: "#1B4F8A" }} />
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 flex items-center justify-center border flex-shrink-0" style={{ borderColor: "rgba(201,169,110,0.3)" }}>
+                    <Clock size={15} strokeWidth={1.5} style={{ color: "#C9A96E" }} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: "rgba(245,241,235,0.3)" }}>Hours</p>
+                    <p className="text-base font-medium" style={{ color: "#F5F1EB" }}>Mon–Sat · 7am–6pm</p>
+                  </div>
                 </div>
-                <h3 className="font-bold mb-3" style={{ color: "#212529" }}>Hours</h3>
-                <div className="space-y-1 text-sm text-neutral-600">
-                  <div className="flex justify-between"><span>Mon – Fri</span><span className="font-semibold">7:00am – 7:00pm</span></div>
-                  <div className="flex justify-between"><span>Saturday</span><span className="font-semibold">8:00am – 5:00pm</span></div>
-                  <div className="flex justify-between"><span>Sunday</span><span className="font-semibold text-neutral-400">Closed</span></div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 flex items-center justify-center border flex-shrink-0" style={{ borderColor: "rgba(201,169,110,0.3)" }}>
+                    <MapPin size={15} strokeWidth={1.5} style={{ color: "#C9A96E" }} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: "rgba(245,241,235,0.3)" }}>Service Area</p>
+                    <p className="text-base font-medium" style={{ color: "#F5F1EB" }}>Triangle Area, NC</p>
+                    <p className="text-sm mt-0.5" style={{ color: "rgba(245,241,235,0.4)" }}>Raleigh · Durham · Chapel Hill · Cary &amp; beyond</p>
+                  </div>
                 </div>
-              </div>
-
-              {/* Service Area */}
-              <div className="bg-white rounded-2xl p-6 border border-neutral-100 shadow-sm">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "rgba(27,79,138,0.08)" }}>
-                  <MapPin size={18} style={{ color: "#1B4F8A" }} />
-                </div>
-                <h3 className="font-bold mb-3" style={{ color: "#212529" }}>Service Area</h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {["Raleigh", "Durham", "Chapel Hill", "Cary", "Apex", "Morrisville", "Wake Forest", "Garner", "Clayton", "Fuquay-Varina"].map((city) => (
-                    <span key={city} className="text-xs px-2.5 py-1 rounded-full font-medium" style={{ backgroundColor: "#F1F3F5", color: "#343A40" }}>
-                      {city}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-xs text-neutral-400 mt-3">Not sure if we serve your area? Give us a call!</p>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Map placeholder */}
-          <div className="mt-8 rounded-2xl overflow-hidden border border-neutral-100 shadow-sm" style={{ height: "280px", backgroundColor: "#E9ECEF" }}>
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center">
-                <MapPin size={32} className="mx-auto mb-3" style={{ color: "#1B4F8A" }} />
-                <p className="font-bold" style={{ color: "#343A40" }}>Triangle Area, North Carolina</p>
-                <p className="text-sm text-neutral-400 mt-1">Raleigh · Durham · Chapel Hill · Cary &amp; Surrounding Areas</p>
+      {/* ─── FORM SECTION ─── */}
+      <section className="py-20 lg:py-28 px-6 lg:px-12" style={{ backgroundColor: "#F5F1EB" }}>
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0">
+
+            {/* Left label column */}
+            <div className="lg:col-span-4 lg:pr-16">
+              <p className="text-xs uppercase tracking-[0.3em] font-medium mb-6" style={{ color: "#C9A96E" }}>
+                Free Estimate Request
+              </p>
+              <h2
+                className="font-display font-light leading-[1.0] mb-8"
+                style={{
+                  fontSize: "clamp(28px, 3vw, 44px)",
+                  color: "#0C1117",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Tell us about
+                <br />
+                <em>your project.</em>
+              </h2>
+              <p className="text-sm leading-relaxed mb-8" style={{ color: "#3D4147" }}>
+                We&apos;ll get back to you within one business day to schedule a walkthrough. No commitment required.
+              </p>
+              <div className="space-y-3">
+                {[
+                  "Free, no-obligation estimate",
+                  "We come to your property",
+                  "Written quote provided",
+                  "Response within 1 business day",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: "#C9A96E" }} />
+                    <span className="text-sm" style={{ color: "#0C1117" }}>{item}</span>
+                  </div>
+                ))}
               </div>
+            </div>
+
+            {/* Right form column */}
+            <div className="lg:col-span-7 lg:col-start-6">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SERVICE AREAS ─── */}
+      <section className="py-20 px-6 lg:px-12" style={{ backgroundColor: "#EAE4D8" }}>
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-0">
+            <div className="lg:w-1/3 lg:pr-20">
+              <p className="text-xs uppercase tracking-[0.3em] font-medium mb-4" style={{ color: "#C9A96E" }}>
+                Where We Serve
+              </p>
+              <h2
+                className="font-display font-light leading-[1.0]"
+                style={{
+                  fontSize: "clamp(28px, 3vw, 44px)",
+                  color: "#0C1117",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Covering the
+                <br />
+                <em style={{ color: "#C9A96E" }}>whole Triangle.</em>
+              </h2>
+            </div>
+            <div className="lg:w-2/3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-3">
+                {areas.map((area) => (
+                  <div key={area} className="flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full" style={{ backgroundColor: "#C9A96E" }} />
+                    <span className="text-sm" style={{ color: "#0C1117" }}>{area}, NC</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs mt-6 uppercase tracking-[0.18em]" style={{ color: "#8B8E99" }}>
+                Not sure if we cover your area? Call us — we likely do.
+              </p>
             </div>
           </div>
         </div>
