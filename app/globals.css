@@ -1,26 +1,49 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand: #1B4F8A;
+  --color-brand-dark: #143D6B;
+  --color-brand-light: #2E6CB8;
+  --color-accent: #E8A020;
+  --color-accent-dark: #C8880E;
+  --color-neutral-50: #F8F9FA;
+  --color-neutral-100: #F1F3F5;
+  --color-neutral-200: #E9ECEF;
+  --color-neutral-300: #DEE2E6;
+  --color-neutral-500: #6C757D;
+  --color-neutral-700: #343A40;
+  --color-neutral-900: #212529;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #212529;
+  min-height: 100vh;
+  line-height: 1.6;
 }
+
+::selection {
+  background-color: rgba(27, 79, 138, 0.2);
+  color: #143D6B;
+}
+
+:focus-visible {
+  outline: 2px solid #1B4F8A;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F1F3F5; }
+::-webkit-scrollbar-thumb { background: #DEE2E6; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #1B4F8A; }
